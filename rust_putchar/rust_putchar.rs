@@ -1,18 +1,21 @@
+// https://doc.rust-lang.org/std/macro.write.html
+
 use std::io::{self, Write};
 
 pub fn rust_putchar(c: char) -> io::Result<()> {
-    let mut stdout = io::stdout();
+    let stdout = io::stdout();
+    let mut handle = stdout.lock();
 
-    write!(&mut stdout, "{}", c)?;
-    stdout.flush()?;
+    write!(handle, "{}", c)?;
+    handle.flush()?;
 
     Ok(())
 }
 
-/*
-fn main() -> io::Result<()> {
-    rust_putchar('1')?;
-    rust_putchar('\n')?;
-    Ok(())
-}
-*/
+// // test
+// fn main() -> io::Result<()> {
+//     rust_putchar('A')?;
+//     rust_putchar('\n')?;
+//     Ok(())
+// }
+
